@@ -333,3 +333,61 @@ console.log(
     ]).pretty()
 );
 */
+
+/* Este comando é responsavel por buscar todos os veiculos que possuem um ano de 
+fabricação maior ou igual a 2016.
+db.veiculos.find({ ano: { $gte: 2016 } }).pretty()
+*/
+
+/* Este comando é responsavel por buscar todos os servicos cujo valor seja menor
+que 100 reais.
+db.servicos.find({ valor: { $lt: 100.00 } }).pretty()
+*/
+
+/* Este comando é responsavel por buscar todos os veiculos que possuem um id
+superior a 4.
+db.veiculos.find({ _id: { $gt: 4 } }).pretty()
+*/
+
+/* Este comando é responsavel por buscar todos os veiculos cujo quilometragem
+é menor ou igual a 100mil.
+db.veiculos.find({ quilometragem: { $lte: 100_000 } }).pretty()
+*/
+
+/* Este comando lista os servicos cujo o id foi selecionado e depois busca quais
+são os respectivos veiculos daquele serviço.
+db.servicos.aggregate([
+    {
+        $match: {
+            veiculoId: {$in: [5, 3, 8]}
+        }
+    }, 
+    {
+        $lookup: {
+          from: "veiculos",
+          localField: "veiculoId",
+          foreignField: "_id",
+          as: "veiculos"
+        }
+    },
+]).pretty()
+*/
+
+/* Este comando filtra somente os servicos que ainda não foram finalizados e mostra o
+veiculo referente.
+db.servicos.aggregate([
+    {
+        $match: {
+            concluido: {$ne: true}
+        },
+    },
+    {
+        $lookup: {
+          from: "veiculos",
+          localField: "veiculoId",
+          foreignField: "_id",
+          as: "veiculos"
+        }
+    },
+]).pretty()
+*/
