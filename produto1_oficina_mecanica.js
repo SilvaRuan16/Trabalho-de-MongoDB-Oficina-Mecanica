@@ -391,3 +391,31 @@ db.servicos.aggregate([
     },
 ]).pretty()
 */
+
+// --------------------------------------------------
+// 4. CONSULTAS COM OPERADORES LÓGICOS
+// --------------------------------------------------
+
+//4.1 $and (implicito) - (Busca por serviços de troca de pastilhas que foram concluídos)
+db.servicos.find({ concluido: true, valor: { $gte: 200 } }).pretty();
+
+//4.2 $and (explicito) - (Busca por serviços aonde foi concluido ou não e que sejam do tipo troca de velas ou revisão geral)
+db.servicos.find({
+    $and: [{ $or: [{ concluido: true }, { concluido: false }] },
+    { $or: [{ tipo: 'Troca de velas' }, { tipo: 'Revisao geral' }] }]
+}).pretty();
+
+//4.3 $or - (Busca por serviços do tipo troca de oleo ou revisão de freios)
+db.servicos.find({
+    $or: [{ tipo: 'Troca de oleo' }, { tipo: 'Revisao de freios' }]
+}).pretty();
+
+//4.4 $nor - (Busca por veículos que não sejam da cor preta ou branca)
+db.veiculos.find({
+    $nor: [{ cor: 'Preto' }, { cor: 'Branco' }]
+}).pretty();
+
+//4.5 $not - (Busca por veículos que não sejam do ano de fabricação 2010 ou inferior)
+db.veiculos.find({
+   ano: { $not: { $lte: 2010 } }
+}).pretty();
