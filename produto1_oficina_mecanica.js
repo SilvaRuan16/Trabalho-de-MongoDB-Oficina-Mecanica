@@ -318,44 +318,19 @@ db.servicos.insertMany([
     }
 ]);
 
-/*
-console.log('--- RELAÇÃO 1 VEÍCULO PARA MUITOS SERVIÇOS ---');
-console.log(
-    db.veiculos.aggregate([
-        {
-            $lookup: {
-                from: 'servicos',
-                localField: '_id',
-                foreignField: 'veiculoId',
-                as: 'servicos'
-            }
-        }
-    ]).pretty()
-);
-*/
-
-/* Este comando é responsavel por buscar todos os veiculos que possuem um ano de 
-fabricação maior ou igual a 2016.
+// Este comando é responsavel por buscar todos os veiculos que possuem um ano de fabricação maior ou igual a 2016.
 db.veiculos.find({ ano: { $gte: 2016 } }).pretty()
-*/
 
-/* Este comando é responsavel por buscar todos os servicos cujo valor seja menor
-que 100 reais.
+// Este comando é responsavel por buscar todos os servicos cujo valor seja menor que 100 reais.
 db.servicos.find({ valor: { $lt: 100.00 } }).pretty()
-*/
 
-/* Este comando é responsavel por buscar todos os veiculos que possuem um id
-superior a 4.
+// Este comando é responsavel por buscar todos os veiculos que possuem um id superior a 4.
 db.veiculos.find({ _id: { $gt: 4 } }).pretty()
-*/
 
-/* Este comando é responsavel por buscar todos os veiculos cujo quilometragem
-é menor ou igual a 100mil.
+// Este comando é responsavel por buscar todos os veiculos cujo quilometragem é menor ou igual a 100mil.
 db.veiculos.find({ quilometragem: { $lte: 100_000 } }).pretty()
-*/
 
-/* Este comando lista os servicos cujo o id foi selecionado e depois busca quais
-são os respectivos veiculos daquele serviço.
+// Este comando lista os servicos cujo o id foi selecionado e depois busca quais são os respectivos veiculos daquele serviço.
 db.servicos.aggregate([
     {
         $match: {
@@ -371,10 +346,8 @@ db.servicos.aggregate([
         }
     },
 ]).pretty()
-*/
 
-/* Este comando filtra somente os servicos que ainda não foram finalizados e mostra o
-veiculo referente.
+// Este comando filtra somente os servicos que ainda não foram finalizados e mostra o veiculo referente.
 db.servicos.aggregate([
     {
         $match: {
@@ -390,7 +363,6 @@ db.servicos.aggregate([
         }
     },
 ]).pretty()
-*/
 
 // --------------------------------------------------
 // 4. CONSULTAS COM OPERADORES LÓGICOS
