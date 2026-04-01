@@ -29,7 +29,7 @@ db.servicos.deleteMany({});
 // --------------------------------------------------
 
 // 2.1 Insere os dados sobre o veículo
-db.veiculos.insertMany([
+printjson(db.veiculos.insertMany([
     {
         _id: 1,
         marca: 'Volkswagen',
@@ -180,10 +180,10 @@ db.veiculos.insertMany([
         quilometragem: 73_000,
         proprietario: 'Aline Ribeiro'
     }
-]);
+]));
 
 // 2.2 Insere os dados sobre os serviços realizados
-db.servicos.insertMany([
+printjson(db.servicos.insertMany([
     {
         tipo: 'Troca de oleo',
         descricao: 'Troca de oleo do motor e filtro',
@@ -320,7 +320,7 @@ db.servicos.insertMany([
         dataServico: new Date('2026-05-10'),
         veiculoId: 4
     }
-]);
+]));
 
 // --------------------------------------------------
 // 3. CONSULTAS COM OPERADORES DE COMPARAÇÃO
@@ -419,7 +419,7 @@ printjson(db.veiculos.find({
 // 4.6 $and + $or - (Busca por veículos da marca Volkswagen que sejam da cor preta ou branca)
 print("--- 4.6 $and + $or - (Busca por veículos da marca Volkswagen que sejam da cor prata ou azul) ---");
 printjson(db.veiculos.find({
-    $and: [{ marca: "Volkswagen" }, {}]
+    $and: [{ marca: "Volkswagen" }, { $or: [{ cor: 'Prata' }, { cor: 'Azul' }] }]
 }).toArray());
 
 // 4.7 Combinacoes - (Busca por serviços não concluídos com valor maior ou igual a 300.00 e data de serviço dentro de um data antiga ou mais atual)
@@ -469,3 +469,21 @@ printjson(db.veiculos.aggregate([
         }
     },
 ]).toArray());
+
+// 5.1 updateOne - (Atualiza o valor de um serviço específico e marca como concluído)
+print("--- 5.1 updateOne - (Atualiza o valor e status de um serviço específico) ---");
+printjson(db.servicos.updateOne(
+    { tipo: 'Troca de pastilhas', veiculoId: 15 },
+    {
+        $set: {
+            valor: 600.00,
+            concluido: true
+        }
+    }
+));
+
+// 5.2 deleteOne - (Remove um serviço específico da base de dados)
+print("--- 5.2 deleteOne - (Remove um serviço que foi cancelado ou inserido indevidamente) ---");
+printjson(db.servicos.deleteOne(
+    { tipo: 'Troca de pneus', veiculoId: 4 }
+));
